@@ -1,4 +1,4 @@
-This quickstart will get you going with Java web apps using the [Gradle][gradle] build system and [Jetty][jetty] embedded web server on the [Cedar](cedar) stack.
+This quickstart will get you going with Java apps on the Heroku [Cedar](cedar) stack using the [Gradle][gradle] build system and [Jetty][jetty] embedded web server.
 
 Sample code is available on [github][this-github] along with [this article][this-article-github]. Edits and enhancements are welcome. Just fork the repository, make your changes and send us a pull request.
 
@@ -133,16 +133,16 @@ Now that you have a `Procfile`, you can start your application with [Foreman][fo
 
     :::term
     $ foreman start
-    15:52:23 web.1     | started with pid 21416
-    15:52:24 web.1     | 2011-08-18 15:52:24.066:INFO::jetty-7.4.5.v20110725
-    15:52:24 web.1     | 2011-08-18 15:52:24.142:INFO::started o.e.j.s.ServletContextHandler{/,null}
-    15:52:24 web.1     | 2011-08-18 15:52:24.168:INFO::Started SelectChannelConnector@0.0.0.0:5000 START
-
+    11:01:26 web.1     | started with pid 68657
+    11:01:27 web.1     | 2011-10-13 11:01:27.033:INFO:oejs.Server:jetty-7.5.3.v20111011
+    11:01:27 web.1     | 2011-10-13 11:01:27.229:INFO:oejsh.ContextHandler:started o.e.j.s.ServletContextHandler{/,null}
+    11:01:27 web.1     | 2011-10-13 11:01:27.269:INFO:oejs.AbstractConnector:Started SelectChannelConnector@0.0.0.0:5000 STARTING
+    
 Your app will come up on port 5000.  Test that it's working with `curl` or a web browser, then Ctrl-C to exit.
 
 ## Store Your App in Git
 
-We now have the three major components of our app: build configuration and dependencies in `pom.xml`, process types in `Procfile`, and our application source in `src/main/java/HelloWorld.java`.  Let's put it into Git:
+We now have the three major components of our app: build configuration and dependencies in `build.gradle`, process types in `Procfile`, and our application source in `src/main/java/HelloWorld.java`.  Let's put it into Git:
 
     :::term
     $ git init
@@ -154,43 +154,43 @@ We now have the three major components of our app: build configuration and depen
 Create the app on the Cedar stack:
 
     :::term
-    $ heroku create --stack cedar
-    Creating stark-sword-398... done, stack is cedar
-    http://stark-sword-398.herokuapp.com/ | git@heroku.com:stark-sword-398.git
-    Git remote heroku added
+    $ heroku create -s cedar
+    Creating evening-sky-2099... done, stack is cedar
+    http://evening-sky-2099.herokuapp.com/ | git@heroku.com:evening-sky-2099.git
 
 Deploy your code:
 
     :::term
     $ git push heroku master
-    Counting objects: 9, done.
+    Counting objects: 18, done.
     Delta compression using up to 4 threads.
     Compressing objects: 100% (5/5), done.
-    Writing objects: 100% (9/9), 1.37 KiB, done.
-    Total 9 (delta 0), reused 0 (delta 0)
-    
+    Writing objects: 100% (10/10), 1.59 KiB, done.
+    Total 10 (delta 2), reused 0 (delta 0)
+
     -----> Heroku receiving push
-    -----> Java app detected
-    -----> Installing Maven 3.0.3..... done
-    -----> executing .maven/bin/mvn -B -Duser.home=/tmp/build_1cq2vqzdjg7yh -DskipTests=true clean install
-           [INFO] Scanning for projects...
-           [INFO]                                                                         
-           [INFO] ------------------------------------------------------------------------
-           [INFO] Building helloworld 1.0-SNAPSHOT
-           [INFO] ------------------------------------------------------------------------
+    -----> Fetching custom language pack... done
+    -----> Java/Gradle app detected
+    -----> Installing gradle-1.0-milestone-3..... done
+           (Use the Gradle Wrapper if you want to use a different gradle version)
+    -----> executing gradle
+           :compileJava
+           Download http://repo1.maven.org/maven2/org/eclipse/jetty/jetty-servlet/7.5.3.v20111011/jetty-servlet-7.5.3.v20111
            ...
-           [INFO] ------------------------------------------------------------------------
-           [INFO] BUILD SUCCESS
-           [INFO] ------------------------------------------------------------------------
-           [INFO] Total time: 25.671s
-           [INFO] Finished at: Thu Aug 18 05:22:18 UTC 2011
-           [INFO] Final Memory: 10M/225M
-           [INFO] ------------------------------------------------------------------------
+           :processResources UP-TO-DATE
+           :classes
+           :jar
+           :startScripts
+           :installApp
+       
+           BUILD SUCCESSFUL
+       
+           Total time: 20.534 secs
     -----> Discovering process types
            Procfile declares types -> web
-    -----> Compiled slug size is 12.4MB
+    -----> Compiled slug size is 936K
     -----> Launching... done, v5
-           http://stark-sword-398.herokuapp.com deployed to Heroku
+           http://blazing-planet-4614.herokuapp.com deployed to Heroku
 
 Now, let's check the state of the app's processes:
 
@@ -198,24 +198,32 @@ Now, let's check the state of the app's processes:
     $ heroku ps
     Process       State               Command
     ------------  ------------------  ------------------------------
-    web.1         up for 10s          sh target/bin/webapp
+    web.1         up for 1m           ./build/install/app/bin/app
 
 The web process is up.  Review the logs for more information:
 
     :::term
     $ heroku logs
-    ...
-    2011-08-18T05:30:55+00:00 heroku[web.1]: Starting process with command `java -Xmx384m -Xss256k -XX:+UseCompressedOops -classpath target/classes:"target/dependency/*" HelloWorld`
-    2011-08-18T05:30:56+00:00 app[web.1]: 2011-08-18 05:30:56.310:INFO::jetty-7.4.5.v20110725
-    2011-08-18T05:30:56+00:00 app[web.1]: 2011-08-18 05:30:56.353:INFO::started o.e.j.s.ServletContextHandler{/,null}
-    2011-08-18T05:30:56+00:00 app[web.1]: 2011-08-18 05:30:56.389:INFO::Started SelectChannelConnector@0.0.0.0:22464 STARTING
-    2011-08-18T05:30:56+00:00 heroku[web.1]: State changed from starting to up
+    2011-10-13T18:06:23+00:00 heroku[api]: Deploy 7c70d13 by jesper@heroku.com
+    2011-10-13T18:06:23+00:00 heroku[api]: Release v5 created by jesper@heroku.com
+    2011-10-13T18:06:24+00:00 heroku[slugc]: Slug compilation finished
+    2011-10-13T18:06:43+00:00 heroku[web.1]: Unidling
+    2011-10-13T18:06:43+00:00 heroku[web.1]: State changed from down to created
+    2011-10-13T18:06:43+00:00 heroku[web.1]: State changed from created to starting
+    2011-10-13T18:06:44+00:00 heroku[web.1]: Starting process with command `./build/install/app/bin/app`
+    2011-10-13T18:06:45+00:00 app[web.1]: 2011-10-13 18:06:45.198:INFO:oejs.Server:jetty-7.5.3.v20111011
+    2011-10-13T18:06:45+00:00 app[web.1]: 2011-10-13 18:06:45.258:INFO:oejsh.ContextHandler:started o.e.j.s.ServletContextHandler{/,null}
+    2011-10-13T18:06:45+00:00 app[web.1]: 2011-10-13 18:06:45.293:INFO:oejs.AbstractConnector:Started SelectChannelConnector@0.0.0.0:27922 STARTING
+    2011-10-13T18:06:46+00:00 heroku[web.1]: State changed from starting to up
 
 Looks good.  We can now visit the app with `heroku open`.
 
-## Next Step: Database-driven Apps
+## Summary
 
-The [Spring MVC Hibernate tutorial](spring-mvc-hibernate) will guide you through setting up a database-driven application on Heroku.
+This example was a very simple app, but hopefully it demonstrates how you can run _anything_ on Heroku that
+
+* you can build with Gradle
+* runs on OpenJDK 6
 
 [gradle]: http://gradle.org
 [servlet]: http://www.oracle.com/technetwork/java/javaee/servlet/index.html
