@@ -1,12 +1,12 @@
-This quickstart will get you going with Java and the [Jetty](http://eclipse.org/jetty/) embedded web server on the [Cedar](http://devcenter.heroku.com/articles/cedar) stack.
+This quickstart will get you going with Java web apps using the [Gradle][gradle] build system and [Jetty][jetty] embedded web server on the [Cedar](cedar) stack.
 
-Sample code is available on [github](https://github.com/heroku/devcenter-java) along with this document. Edits and enhancements are welcome. Just fork the repository, make your changes and send us a pull request.
+Sample code is available on [github][this-github] along with [this article][this-article-github]. Edits and enhancements are welcome. Just fork the repository, make your changes and send us a pull request.
 
 ## Prerequisites
 
-* Basic Java knowledge, including an installed version of the JVM and [Maven 3](http://maven.apache.org/download.html).
-* Your application must run on the [OpenJDK](http://openjdk.java.net/) version 6.
-* A Heroku user account.  [Signup is free and instant.](https://api.heroku.com/signup)
+* Basic Java knowledge, including an installed version of the JVM and [Gradle][gradle] 1.0-milestone-3 or later.
+* Your application must run on the [OpenJDK][openjdk] version 6.
+* A Heroku user account.  [Signup is free and instant.][signup]
 
 ## Local Workstation Setup
 
@@ -51,7 +51,9 @@ Press enter at the prompt to upload your existing `ssh` key or create a new one,
 
 ## Write Your App
     
-You can run any Java application on Heroku that uses Maven as build tool. As an example, we will write a web app using Jetty. Here is a basic servlet class that also contains a main method to start up the application:
+We will be creating a completely standard Java application that serves web requests using the [Servlet API][servlet] and the embedded Jetty web server.
+
+First create a class that implements a simple Servlet. For the purpose of this example, we'll also create the main method in this class.
 
 ### src/main/java/HelloWorld.java
 
@@ -81,72 +83,42 @@ You can run any Java application on Heroku that uses Maven as build tool. As an 
         }
     }
 
-## Declare Dependencies in `pom.xml`
+## Set up the build
 
-Cedar recognizes Java apps by the existence of a `pom.xml` file. Here's an example `pom.xml` for the Java/Jetty app we created above. The `maven-appassembler-plugin` generates an execution wrapper with the correct `CLASSPATH`.
+Create a Gradle build file in your project root:
 
-### pom.xml
+### build.gradle
 
-    :::xml
-    <?xml version="1.0" encoding="UTF-8"?>
-    <project xmlns="http://maven.apache.org/POM/4.0.0" 
-             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-             xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-        <modelVersion>4.0.0</modelVersion>
-        <groupId>com.example</groupId>
-        <version>1.0-SNAPSHOT</version>
-        <artifactId>helloworld</artifactId>
-        <dependencies>
-            <dependency>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-servlet</artifactId>
-                <version>7.4.5.v20110725</version>
-            </dependency>
-            <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>servlet-api</artifactId>
-                <version>2.5</version>
-            </dependency>
-        </dependencies>
-        <build>
-            <plugins>
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>appassembler-maven-plugin</artifactId>
-                    <version>1.1.1</version>
-                    <executions>
-                        <execution>
-                            <phase>package</phase>
-                            <goals><goal>assemble</goal></goals>
-                            <configuration>
-                                <assembleDirectory>target</assembleDirectory>
-                                <programs>
-                                    <program>
-                                        <mainClass>HelloWorld</mainClass>
-                                        <name>webapp</name>
-                                    </program>
-                                </programs>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-            </plugins>
-        </build>
-    </project>
+    apply plugin:'java'
+    apply plugin:'application'
+
+    defaultTasks 'install'
+
+    mainClassName = "HelloWorld"
+    applicationName = "app"
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        compile 'org.eclipse.jetty:jetty-servlet:7.4.5.v20110725'
+        compile 'javax.servlet:servlet-api:2.5'
+    }
 
 Prevent build artifacts from going into revision control by creating this file:
 
 ### .gitignore
 
     :::term
-    target
+    build
 
 ## Build Your App
 
 Build your app locally:
 
     :::term
-    $ mvn install
+    $ gradle
 
 ## Declare Process Types With Foreman/Procfile
 
@@ -155,9 +127,9 @@ To run your web process, you need to declare what command to use.  We'll use `Pr
 Here's what the `Procfile` looks like:
 
     :::term
-    web: sh target/bin/webapp
+    web: ./build/install/app/bin/app
 
-Now that you have a `Procfile`, you can start your application with [Foreman](http://blog.daviddollar.org/2011/05/06/introducing-foreman.html):
+Now that you have a `Procfile`, you can start your application with [Foreman][foreman]:
 
     :::term
     $ foreman start
@@ -244,3 +216,12 @@ Looks good.  We can now visit the app with `heroku open`.
 ## Next Step: Database-driven Apps
 
 The [Spring MVC Hibernate tutorial](spring-mvc-hibernate) will guide you through setting up a database-driven application on Heroku.
+
+[gradle]: http://gradle.org
+[servlet]: http://www.oracle.com/technetwork/java/javaee/servlet/index.html
+[jetty]: http://eclipse.org/jetty/
+[this-github]: https://github.com/heroku/devcenter-gradle
+[this-article-github]: https://github.com/heroku/devcenter-gradle/blob/master/README.md
+[openjdk]: http://openjdk.java.net/
+[signup]: https://api.heroku.com/signup
+[foreman]: http://blog.daviddollar.org/2011/05/06/introducing-foreman.html
