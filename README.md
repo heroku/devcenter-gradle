@@ -4,7 +4,8 @@ Sample code is available on [github][this-github] along with [this article][this
 
 ## Prerequisites
 
-* Basic Java knowledge, including an installed version of the JVM and [Gradle][gradle] 1.0-milestone-3 or later.
+* Basic Java knowledge, including an installed version of the JVM.
+* Basic Gradle knowledge including an installed version of [Gradle][gradle] (1.0-milestone-3 or later).
 * Your application must run on the [OpenJDK][openjdk] version 6.
 * A Heroku user account.  [Signup is free and instant.][signup]
 
@@ -112,6 +113,7 @@ Prevent build artifacts from going into revision control by creating this file:
 
     :::term
     build
+    .gradle
 
 ## Build Your App
 
@@ -158,6 +160,13 @@ Create the app on the Cedar stack:
     Creating evening-sky-2099... done, stack is cedar
     http://evening-sky-2099.herokuapp.com/ | git@heroku.com:evening-sky-2099.git
 
+Set the build pack:
+
+    :::term
+    heroku config:add BUILDPACK_URL="https://name:password@github.com/heroku/heroku-buildpack-gradle.git"
+
+(replace name:password with your github username and password).
+
 Deploy your code:
 
     :::term
@@ -169,7 +178,6 @@ Deploy your code:
     Total 10 (delta 2), reused 0 (delta 0)
 
     -----> Heroku receiving push
-    -----> Fetching custom language pack... done
     -----> Java/Gradle app detected
     -----> Installing gradle-1.0-milestone-3..... done
            (Use the Gradle Wrapper if you want to use a different gradle version)
@@ -217,13 +225,6 @@ The web process is up.  Review the logs for more information:
     2011-10-13T18:06:46+00:00 heroku[web.1]: State changed from starting to up
 
 Looks good.  We can now visit the app with `heroku open`.
-
-## Summary
-
-This example was a very simple app, but hopefully it demonstrates how you can run _anything_ on Heroku that
-
-* you can build with Gradle
-* runs on OpenJDK 6
 
 [gradle]: http://gradle.org
 [servlet]: http://www.oracle.com/technetwork/java/javaee/servlet/index.html
