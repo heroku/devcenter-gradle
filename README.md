@@ -124,7 +124,7 @@ Build your app locally:
 
 ## Declare Process Types With Foreman/Procfile
 
-To run your web process, you need to declare what command to use.  We'll use `Procfile` to declare how our web process type is run. The `appassembler` plugin takes care of generating a run script, `target/bin/webapp`, which we'll use to start the web app.
+To run your web process, you need to declare what command to use.  We'll use `Procfile` to declare how our web process type is run. The `application` plugin takes care of generating a run script, `build/install/app/bin/app`, which we'll use to start the web app.
 
 Here's what the `Procfile` looks like:
 
