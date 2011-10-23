@@ -86,7 +86,7 @@ First create a class that implements a simple Servlet. For the purpose of this e
 
 ## Set up the build
 
-Create a Gradle build file in your project root:
+Create a Gradle build file in your project root. The default tasks will be run by Heroku to build your app:
 
 ### build.gradle
 
@@ -140,7 +140,7 @@ Now that you have a `Procfile`, you can start your application with [Foreman][fo
     11:01:27 web.1     | 2011-10-13 11:01:27.229:INFO:oejsh.ContextHandler:started o.e.j.s.ServletContextHandler{/,null}
     11:01:27 web.1     | 2011-10-13 11:01:27.269:INFO:oejs.AbstractConnector:Started SelectChannelConnector@0.0.0.0:5000 STARTING
     
-Your app will come up on port 5000.  Test that it's working with `curl` or a web browser, then Ctrl-C to exit.
+Your app will come up on port 5000, the default port set by Foreman. Test that it's working with `curl` or a web browser, then Ctrl-C to exit.
 
 ## Store Your App in Git
 
