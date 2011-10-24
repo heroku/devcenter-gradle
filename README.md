@@ -163,9 +163,9 @@ Create the app on the Cedar stack:
 Set the build pack:
 
     :::term
-    heroku config:add BUILDPACK_URL="https://name:password@github.com/heroku/heroku-buildpack-gradle.git"
+    $ heroku config:add BUILDPACK_URL="https://username:password@github.com/heroku/heroku-buildpack-gradle.git"
 
-(replace name:password with your github username and password).
+(replace username:password with your GitHub username and password).
 
 Deploy your code:
 
