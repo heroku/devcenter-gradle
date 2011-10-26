@@ -165,8 +165,6 @@ Set the build pack:
     :::term
     $ heroku config:add BUILDPACK_URL="git@github.com:heroku/heroku-buildpack-gradle.git"
 
-(replace username:password with your GitHub username and password).
-
 Deploy your code:
 
     :::term
