@@ -1,8 +1,6 @@
 apply plugin:'java'
 apply plugin:'application'
 
-defaultTasks 'install'
-
 mainClassName = "HelloWorld"
 applicationName = "app"
 
@@ -14,3 +12,5 @@ dependencies {
     compile 'org.eclipse.jetty:jetty-servlet:7.5.3.v20111011'
     compile 'javax.servlet:servlet-api:2.5'
 }
+
+task stage(dependsOn: ['clean', 'installApp'])
