@@ -107,6 +107,8 @@ Create a Gradle build file in your project root. The default tasks will be run b
         compile 'javax.servlet:servlet-api:2.5'
     }
 
+    task stage(dependsOn: ['clean', 'installApp'])
+
 Prevent build artifacts from going into revision control by creating this file:
 
 ### .gitignore
@@ -120,7 +122,7 @@ Prevent build artifacts from going into revision control by creating this file:
 Build your app locally:
 
     :::term
-    $ gradle
+    $ gradle stage
 
 ## Declare Process Types With Foreman/Procfile
 
@@ -159,11 +161,6 @@ Create the app on the Cedar stack:
     $ heroku create -s cedar
     Creating evening-sky-2099... done, stack is cedar
     http://evening-sky-2099.herokuapp.com/ | git@heroku.com:evening-sky-2099.git
-
-Set the build pack:
-
-    :::term
-    $ heroku config:add BUILDPACK_URL="git@github.com:heroku/heroku-buildpack-gradle.git"
 
 Deploy your code:
 
