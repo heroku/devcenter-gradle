@@ -5,7 +5,7 @@ Sample code is available on [github][this-github] along with [this article][this
 ## Prerequisites
 
 * Basic Java knowledge, including an installed version of the JVM.
-* Basic Gradle knowledge, including an installed version of [Gradle][gradle] (1.0-milestone-3 or later).
+* Basic Gradle knowledge, including an installed version of [Gradle][gradle] (1.0-milestone-5 or later).
 * Your application must run on the [OpenJDK][openjdk] version 6.
 * A Heroku user account.  [Signup is free and instant.][signup]
 
@@ -172,7 +172,7 @@ Deploy your code:
 
     -----> Heroku receiving push
     -----> Java/Gradle app detected
-    -----> Installing gradle-1.0-milestone-3..... done
+    -----> Installing gradle-1.0-milestone-5..... done
            (Use the Gradle Wrapper if you want to use a different gradle version)
     -----> executing gradle -I /tmp/asdre342qfad/opt/init.gradle stage
            :compileJava
