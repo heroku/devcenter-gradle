@@ -93,8 +93,6 @@ Create a Gradle build file in your project root. The default tasks will be run b
     apply plugin:'java'
     apply plugin:'application'
 
-    defaultTasks 'install'
-
     mainClassName = "HelloWorld"
     applicationName = "app"
 
@@ -176,9 +174,9 @@ Deploy your code:
     -----> Java/Gradle app detected
     -----> Installing gradle-1.0-milestone-3..... done
            (Use the Gradle Wrapper if you want to use a different gradle version)
-    -----> executing gradle
+    -----> executing gradle -I /tmp/asdre342qfad/opt/init.gradle stage
            :compileJava
-           Download http://repo1.maven.org/maven2/org/eclipse/jetty/jetty-servlet/7.5.3.v20111011/jetty-servlet-7.5.3.v20111
+           Download http://s3pository.heroku.com/jvm/org/eclipse/jetty/jetty-servlet/7.5.3.v20111011/jetty-servlet-7.5.3.v20111
            ...
            :processResources UP-TO-DATE
            :classes
