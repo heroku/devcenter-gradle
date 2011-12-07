@@ -1,4 +1,4 @@
-This quickstart will get you going with Java apps on the Heroku [Cedar](cedar) stack using the [Gradle][gradle] build system and [Jetty][jetty] embedded web server.
+This quickstart will get you going with Java apps on the Heroku [Cedar][cedar] stack using the [Gradle][gradle] build system and [Jetty][jetty] embedded web server.
 
 Sample code is available on [github][this-github] along with [this article][this-article-github]. Edits and enhancements are welcome. Just fork the repository, make your changes and send us a pull request.
 
@@ -219,6 +219,7 @@ The web process is up.  Review the logs for more information:
 
 Looks good.  We can now visit the app with `heroku open`.
 
+[cedar]: http://devcenter.heroku.com/articles/cedar
 [gradle]: http://gradle.org
 [servlet]: http://www.oracle.com/technetwork/java/javaee/servlet/index.html
 [jetty]: http://eclipse.org/jetty/
