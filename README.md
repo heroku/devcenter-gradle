@@ -86,7 +86,7 @@ First create a class that implements a simple Servlet. For the purpose of this e
 
 ## Set up the build
 
-Create a Gradle build file in your project root. The default tasks will be run by Heroku to build your app:
+Create a Gradle build file in your project root. The `stage` task will be run by Heroku to build your app:
 
 ### build.gradle
 
